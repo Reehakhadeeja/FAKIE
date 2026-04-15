@@ -33,6 +33,13 @@ class Database:
             )
         ''')
         
+        # Add email column if it doesn't exist (for existing databases)
+        try:
+            cursor.execute("ALTER TABLE users ADD COLUMN email TEXT UNIQUE")
+        except sqlite3.OperationalError:
+            # Column already exists
+            pass
+        
         # Create resumes table
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS resumes (
