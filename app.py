@@ -537,17 +537,205 @@ def main():
     
     # Check if user is logged in
     if 'user_id' not in st.session_state:
-        # Simple login form
-        st.markdown("# 🐕 Sniff Job")
-        st.markdown("### Login to Your Account")
+        # Authentication page with split layout
+        st.markdown("""
+        <style>
+        .auth-container {
+            display: flex;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .auth-left {
+            flex: 1;
+            padding: 60px 40px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .auth-right {
+            flex: 1;
+            background: white;
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .auth-logo {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .auth-title {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .auth-subtitle {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        .testimonial {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+        .testimonial-author {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        .auth-form-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #1a202c;
+        }
+        .auth-form-subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+        }
+        .social-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .social-btn {
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            font-size: 14px;
+        }
+        .social-btn:hover {
+            background: #f7fafc;
+            border-color: #cbd5e0;
+        }
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #718096;
+            position: relative;
+        }
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e2e8f0;
+        }
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            position: relative;
+        }
+        .auth-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .auth-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .auth-checkbox {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .auth-link {
+            color: #667eea;
+            text-decoration: none;
+        }
+        .auth-link:hover {
+            text-decoration: underline;
+        }
+        .signup-prompt {
+            text-align: center;
+            margin-top: 20px;
+            color: #718096;
+        }
+        </style>
+        """, unsafe_allow_html=True)
         
-        col1, col2, col3 = st.columns([1, 2, 1])
+        # Tab selection for Sign In/Sign Up
+        auth_tab = st.radio("", ["Sign In", "Create account"], horizontal=True)
         
-        with col2:
-            username = st.text_input("Username")
-            password = st.text_input("Password", type="password")
+        if auth_tab == "Sign In":
+            st.markdown("""
+            <div class="auth-container">
+                <div class="auth-left">
+                    <div class="auth-logo">🐕 SniffJob</div>
+                    <div class="auth-title">Welcome back to SniffJob</div>
+                    <div class="auth-subtitle">Your trusted companion for detecting fraudulent job postings</div>
+                    
+                    <div class="testimonial">
+                        <div class="testimonial-text">"SniffJob saved me from a sophisticated job scam. The AI analysis was spot-on!"</div>
+                        <div class="testimonial-author">- Sarah K., Software Developer</div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <div class="testimonial-text">"I feel more confident applying for jobs knowing SniffJob has my back."</div>
+                        <div class="testimonial-author">- Michael R., Marketing Professional</div>
+                    </div>
+                </div>
+                
+                <div class="auth-right">
+                    <div class="auth-form-title">Sign in</div>
+                    <div class="auth-form-subtitle">Welcome back! Please enter your details.</div>
+                    
+                    <div class="social-buttons">
+                        <button class="social-btn" onclick="handleSocialLogin('email')">📧 Sign in with Email</button>
+                        <button class="social-btn" onclick="handleSocialLogin('google')">🔍 Continue with Google</button>
+                        <button class="social-btn" onclick="handleSocialLogin('apple')">🍎 Continue with Apple</button>
+                        <button class="social-btn" onclick="handleSocialLogin('linkedin')">💼 Continue with LinkedIn</button>
+                    </div>
+                    
+                    <div class="divider"><span>or</span></div>
+                </div>
+            </div>
             
-            if st.button("Login", type="primary", use_container_width=True):
+            <script>
+            function handleSocialLogin(provider) {
+                if (provider === 'email') {
+                    // Focus on email input
+                    const emailInput = document.querySelector('input[key="signin_username"]');
+                    if (emailInput) emailInput.focus();
+                } else {
+                    // Show placeholder message for other providers
+                    alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login coming soon! For now, please use email login or the demo account.`);
+                }
+            }
+            </script>
+            """, unsafe_allow_html=True)
+            
+            # Email/Username and password inputs
+            username = st.text_input("Email or Username", key="signin_username")
+            password = st.text_input("Password", type="password", key="signin_password")
+            
+            col1, col2 = st.columns([1, 1])
+            with col1:
+                st.checkbox("Remember me", key="remember_me")
+            with col2:
+                st.markdown('<a href="#" class="auth-link">Forgot password?</a>', unsafe_allow_html=True)
+            
+            if st.button("Sign in", type="primary", use_container_width=True):
                 if username and password:
                     user = db.authenticate_user(username, password)
                     if user:
@@ -559,6 +747,12 @@ def main():
                         st.error("Invalid username or password")
                 else:
                     st.error("Please enter both username and password")
+            
+            st.markdown("""
+            <div class="signup-prompt">
+                Don't have an account? <a href="#" class="auth-link">Sign up</a>
+            </div>
+            """, unsafe_allow_html=True)
             
             st.markdown("---")
             st.markdown("**Demo Account:**")
@@ -573,6 +767,92 @@ def main():
                     st.session_state.user_id = user['id']
                     st.session_state.user = user
                     st.rerun()
+        
+        else:  # Create account
+            st.markdown("""
+            <div class="auth-container">
+                <div class="auth-left">
+                    <div class="auth-logo">🐕 SniffJob</div>
+                    <div class="auth-title">Join SniffJob Today</div>
+                    <div class="auth-subtitle">Start protecting yourself from job scams with AI-powered analysis</div>
+                    
+                    <div class="testimonial">
+                        <div class="testimonial-text">"The free plan helped me avoid 3 fake job offers in just one week!"</div>
+                        <div class="testimonial-author">- Alex T., Recent Graduate</div>
+                    </div>
+                    
+                    <div class="testimonial">
+                        <div class="testimonial-text">"SniffJob's AI gives me peace of mind when job hunting."</div>
+                        <div class="testimonial-author">- Jennifer L., Career Changer</div>
+                    </div>
+                </div>
+                
+                <div class="auth-right">
+                    <div class="auth-form-title">Create account</div>
+                    <div class="auth-form-subtitle">Start your journey to safer job hunting.</div>
+                    
+                    <div class="social-buttons">
+                        <button class="social-btn" onclick="handleSocialSignup('email')">📧 Sign up with Email</button>
+                        <button class="social-btn" onclick="handleSocialSignup('google')">🔍 Continue with Google</button>
+                        <button class="social-btn" onclick="handleSocialSignup('apple')">🍎 Continue with Apple</button>
+                        <button class="social-btn" onclick="handleSocialSignup('linkedin')">💼 Continue with LinkedIn</button>
+                    </div>
+                    
+                    <div class="divider"><span>or</span></div>
+                </div>
+            </div>
+            
+            <script>
+            function handleSocialSignup(provider) {
+                if (provider === 'email') {
+                    // Focus on username input
+                    const usernameInput = document.querySelector('input[key="signup_username"]');
+                    if (usernameInput) usernameInput.focus();
+                } else {
+                    // Show placeholder message for other providers
+                    alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} signup coming soon! For now, please use email signup.`);
+                }
+            }
+            </script>
+            """, unsafe_allow_html=True)
+            
+            # Registration form
+            new_username = st.text_input("Username", key="signup_username")
+            email = st.text_input("Email", key="signup_email")
+            new_password = st.text_input("Password", type="password", key="signup_password")
+            confirm_password = st.text_input("Confirm Password", type="password", key="confirm_password")
+            
+            st.markdown("""
+            <div class="auth-checkbox">
+                <input type="checkbox" id="terms">
+                <label for="terms">I agree to the Terms & Conditions and Privacy Policy</label>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("Create account", type="primary", use_container_width=True):
+                if new_username and email and new_password and confirm_password:
+                    if new_password != confirm_password:
+                        st.error("Passwords do not match")
+                    elif len(new_password) < 6:
+                        st.error("Password must be at least 6 characters long")
+                    else:
+                        # Create new user
+                        success = db.create_user(new_username, new_password, email)
+                        if success:
+                            st.success("Account created successfully! Please sign in.")
+                            # Auto-switch to sign in tab
+                            st.session_state.auth_tab = "Sign In"
+                            st.rerun()
+                        else:
+                            st.error("Username already exists. Please choose another.")
+                else:
+                    st.error("Please fill in all fields")
+            
+            st.markdown("""
+            <div class="signup-prompt">
+                Already have an account? <a href="#" class="auth-link">Sign in</a>
+            </div>
+            """, unsafe_allow_html=True)
     
     else:
         # User is logged in - show main app

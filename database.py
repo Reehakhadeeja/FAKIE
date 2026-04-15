@@ -24,6 +24,7 @@ class Database:
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT UNIQUE NOT NULL,
+                email TEXT UNIQUE,
                 password TEXT NOT NULL,
                 plan TEXT DEFAULT 'Free',
                 tokens INTEGER DEFAULT 20,
@@ -79,17 +80,23 @@ class Database:
         """Hash password using SHA-256"""
         return hashlib.sha256(password.encode()).hexdigest()
     
-    def create_user(self, username: str, password: str) -> bool:
+    def create_user(self, username: str, password: str, email: str = None) -> bool:
         """Create a new user"""
         conn = self.get_connection()
         cursor = conn.cursor()
         
         try:
             hashed_password = self.hash_password(password)
-            cursor.execute(
-                "INSERT INTO users (username, password) VALUES (?, ?)",
-                (username, hashed_password)
-            )
+            if email:
+                cursor.execute(
+                    "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+                    (username, email, hashed_password)
+                )
+            else:
+                cursor.execute(
+                    "INSERT INTO users (username, password) VALUES (?, ?)",
+                    (username, hashed_password)
+                )
             conn.commit()
             return True
         except sqlite3.IntegrityError:
