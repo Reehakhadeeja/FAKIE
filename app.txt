@@ -1284,8 +1284,7 @@ def render_resume_preview():
     if valid_edu:
         body += '<div class="rp-sec">Education</div>'
         for e in valid_edu:
-            grade_html = f'<div style="font-size:.78rem;color:#555">GPA: {e["grade"]}</div>' if e["grade"] else ""
-            body += f'<div style="margin-bottom:.8rem"><div style="display:flex;justify-content:space-between"><span class="rp-etitle">{e["degree"]}</span><span class="rp-edate">{e["year"]}</span></div><div class="rp-esub">{e["institution"]}</div>{grade_html}</div>'
+            body += f'<div style="margin-bottom:.8rem"><div style="display:flex;justify-content:space-between"><span class="rp-etitle">{e["degree"]}</span><span class="rp-edate">{e["year"]}</span></div><div class="rp-esub">{e["institution"]}</div>{f"<div style=&apos;font-size:.78rem;color:#555&apos;>GPA: {e[&apos;grade&apos;]}</div>" if e["grade"] else ""}</div>'
     valid_proj = [p for p in ss.rb_projects if p["name"].strip()]
     if valid_proj:
         body += '<div class="rp-sec">Projects</div>'
