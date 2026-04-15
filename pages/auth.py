@@ -135,52 +135,50 @@ def load_auth_css():
 
 def render_sign_in():
     """Render sign in page"""
-    st.markdown("""
-    <div class="auth-container">
-        <div class="auth-left">
-            <div class="auth-logo">?? SniffJob</div>
-            <div class="auth-title">Welcome back to SniffJob</div>
-            <div class="auth-subtitle">Your trusted companion for detecting fraudulent job postings</div>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">"SniffJob saved me from a sophisticated job scam. The AI analysis was spot-on!"</div>
-                <div class="testimonial-author">- Sarah K., Software Developer</div>
-            </div>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">"I feel more confident applying for jobs knowing SniffJob has my back."</div>
-                <div class="testimonial-author">- Michael R., Marketing Professional</div>
-            </div>
-        </div>
-        
-        <div class="auth-right">
-            <div class="auth-form-title">Sign in</div>
-            <div class="auth-form-subtitle">Welcome back! Please enter your details.</div>
-            
-            <div class="social-buttons">
-                <button class="social-btn" onclick="showMessage('email')">?? Sign in with Email</button>
-                <button class="social-btn" onclick="showMessage('google')">?? Continue with Google</button>
-                <button class="social-btn" onclick="showMessage('apple')">?? Continue with Apple</button>
-                <button class="social-btn" onclick="showMessage('linkedin')">?? Continue with LinkedIn</button>
-            </div>
-            
-            <div class="divider"><span>or</span></div>
-        </div>
-    </div>
+    st.markdown("## ?? Sign In")
+    st.markdown("Welcome back to SniffJob! Your trusted companion for detecting fraudulent job postings.")
     
-    <script>
-    function showMessage(provider) {
-        if (provider === 'email') {
-            // Focus on email input
-            const emailInput = document.querySelector('input[aria-label="Email or Username"]');
-            if (emailInput) emailInput.focus();
-        } else {
-            // Show placeholder message for other providers
-            alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} login coming soon! For now, please use email login or the demo account.`);
-        }
-    }
-    </script>
-    """, unsafe_allow_html=True)
+    # Testimonials
+    st.markdown("---")
+    st.markdown("### What Our Users Say")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.info("""
+        **"SniffJob saved me from a sophisticated job scam. The AI analysis was spot-on!"**
+        
+        *- Sarah K., Software Developer*
+        """)
+    
+    with col2:
+        st.info("""
+        **"I feel more confident applying for jobs knowing SniffJob has my back."**
+        
+        *- Michael R., Marketing Professional*
+        """)
+    
+    st.markdown("---")
+    st.markdown("### Social Login")
+    
+    # Social login buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("?? Sign in with Email", use_container_width=True):
+            st.info("Please use the form below to sign in with email")
+    with col2:
+        if st.button("?? Continue with Google", use_container_width=True):
+            st.info("Google login coming soon!")
+    
+    col3, col4 = st.columns(2)
+    with col3:
+        if st.button("?? Continue with Apple", use_container_width=True):
+            st.info("Apple login coming soon!")
+    with col4:
+        if st.button("?? Continue with LinkedIn", use_container_width=True):
+            st.info("LinkedIn login coming soon!")
+    
+    st.markdown("---")
+    st.markdown("### Sign In with Email")
     
     # Email/Username and password inputs
     username = st.text_input("Email or Username", key="signin_username")
@@ -190,7 +188,7 @@ def render_sign_in():
     with col1:
         st.checkbox("Remember me", key="remember_me")
     with col2:
-        st.markdown('<a href="#" class="auth-link">Forgot password?</a>', unsafe_allow_html=True)
+        st.markdown('[Forgot password?](#)', unsafe_allow_html=True)
     
     if st.button("Sign in", type="primary", use_container_width=True):
         if username and password:
@@ -206,7 +204,7 @@ def render_sign_in():
             st.error("Please enter both username and password")
     
     st.markdown("---")
-    st.markdown("**Demo Account:**")
+    st.markdown("### Demo Account")
     st.markdown("Username: `demo`")
     st.markdown("Password: `demo123`")
     
@@ -221,52 +219,50 @@ def render_sign_in():
 
 def render_sign_up():
     """Render sign up page"""
-    st.markdown("""
-    <div class="auth-container">
-        <div class="auth-left">
-            <div class="auth-logo">?? SniffJob</div>
-            <div class="auth-title">Join SniffJob Today</div>
-            <div class="auth-subtitle">Start protecting yourself from job scams with AI-powered analysis</div>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">"The free plan helped me avoid 3 fake job offers in just one week!"</div>
-                <div class="testimonial-author">- Alex T., Recent Graduate</div>
-            </div>
-            
-            <div class="testimonial">
-                <div class="testimonial-text">"SniffJob's AI gives me peace of mind when job hunting."</div>
-                <div class="testimonial-author">- Jennifer L., Career Changer</div>
-            </div>
-        </div>
-        
-        <div class="auth-right">
-            <div class="auth-form-title">Create account</div>
-            <div class="auth-form-subtitle">Start your journey to safer job hunting.</div>
-            
-            <div class="social-buttons">
-                <button class="social-btn" onclick="showSignupMessage('email')">?? Sign up with Email</button>
-                <button class="social-btn" onclick="showSignupMessage('google')">?? Continue with Google</button>
-                <button class="social-btn" onclick="showSignupMessage('apple')">?? Continue with Apple</button>
-                <button class="social-btn" onclick="showSignupMessage('linkedin')">?? Continue with LinkedIn</button>
-            </div>
-            
-            <div class="divider"><span>or</span></div>
-        </div>
-    </div>
+    st.markdown("## ?? Create Account")
+    st.markdown("Start your journey to safer job hunting with AI-powered analysis.")
     
-    <script>
-    function showSignupMessage(provider) {
-        if (provider === 'email') {
-            // Focus on username input
-            const usernameInput = document.querySelector('input[aria-label="Username"]');
-            if (usernameInput) usernameInput.focus();
-        } else {
-            // Show placeholder message for other providers
-            alert(`${provider.charAt(0).toUpperCase() + provider.slice(1)} signup coming soon! For now, please use email signup.`);
-        }
-    }
-    </script>
-    """, unsafe_allow_html=True)
+    # Testimonials
+    st.markdown("---")
+    st.markdown("### Why Join SniffJob?")
+    
+    col1, col2 = st.columns(2)
+    with col1:
+        st.info("""
+        **"The free plan helped me avoid 3 fake job offers in just one week!"**
+        
+        *- Alex T., Recent Graduate*
+        """)
+    
+    with col2:
+        st.info("""
+        **"SniffJob's AI gives me peace of mind when job hunting."**
+        
+        *- Jennifer L., Career Changer*
+        """)
+    
+    st.markdown("---")
+    st.markdown("### Social Signup")
+    
+    # Social signup buttons
+    col1, col2 = st.columns(2)
+    with col1:
+        if st.button("?? Sign up with Email", use_container_width=True):
+            st.info("Please use the form below to create an account")
+    with col2:
+        if st.button("?? Continue with Google", use_container_width=True):
+            st.info("Google signup coming soon!")
+    
+    col3, col4 = st.columns(2)
+    with col3:
+        if st.button("?? Continue with Apple", use_container_width=True):
+            st.info("Apple signup coming soon!")
+    with col4:
+        if st.button("?? Continue with LinkedIn", use_container_width=True):
+            st.info("LinkedIn signup coming soon!")
+    
+    st.markdown("---")
+    st.markdown("### Create Account with Email")
     
     # Registration form
     new_username = st.text_input("Username", key="signup_username")
@@ -294,12 +290,12 @@ def render_sign_up():
                     st.error("Username already exists. Please choose another.")
         else:
             st.error("Please fill in all fields")
+    
+    st.markdown("---")
+    st.markdown("Already have an account? [Sign in](#)")
 
 def render_auth_page():
     """Main authentication page renderer"""
-    # Load auth-specific CSS
-    load_auth_css()
-    
     # Tab selection for Sign In/Sign Up
     auth_tab = st.radio("Choose an option", ["Sign In", "Create account"], horizontal=True, label_visibility="collapsed")
     
