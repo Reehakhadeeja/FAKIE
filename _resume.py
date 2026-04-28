@@ -20,10 +20,10 @@ def render_resume_page():
     # ─────────────────────────────────────────────
     st.markdown("""
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
 
 /* ── Resume builder wrapper ─────────────────── */
-.rb-wrap { font-family: 'DM Sans', sans-serif; }
+.rb-wrap { font-family: 'EB Garamond', serif; }
 
 /* Cards / expanders inside the resume page */
 .rb-wrap .stExpander {

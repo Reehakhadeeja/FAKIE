@@ -1,0 +1,18 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Uploaded files
+uploads/
+*.pdf
+
+# Streamlit config (optional to ignore, but usually safe to keep local config if it contains secrets. If it only contains theme, it can be tracked. Let's not ignore .streamlit/config.toml for now, but we will ignore any secrets)
+.streamlit/secrets.toml
