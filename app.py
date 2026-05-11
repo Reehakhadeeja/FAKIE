@@ -1,4 +1,23 @@
 import streamlit as st
+import logging
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('sniffjob.log'),
+        logging.StreamHandler()
+    ]
+)
+
+# Run startup validation
+try:
+    from analysis.validator import validate_startup
+    validate_startup()
+except ImportError as e:
+    logging.warning(f"Could not run startup validation: {e}")
+    logging.warning("Application will continue but may have missing dependencies")
 
 from components.style import load_css
 from components.sidebar import render_sidebar
