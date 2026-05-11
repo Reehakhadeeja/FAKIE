@@ -8,11 +8,12 @@ from pdf_builder import build_pdf
 import io
 import re
 
-try:
-    import reportlab
-    REPORTLAB_OK = True
-except ImportError:
-    REPORTLAB_OK = False
+def check_reportlab():
+    try:
+        import reportlab
+        return True
+    except ImportError:
+        return False
 
 def _init_resume_state():
     defs = {
@@ -100,12 +101,12 @@ def render_resume_builder():
         else:
             st.markdown(f"<span style='color:#10b981;font-size:.82rem'>{bi('check-circle','0.85em','#10b981')} All good!</span>", unsafe_allow_html=True)
     with dc:
-        if ss.rb_name.strip() and REPORTLAB_OK:
+        if ss.rb_name.strip() and check_reportlab():
             pdf = build_pdf()
             safe = re.sub(r"[^\w\s-]","",ss.rb_name).strip().replace(" ","_") or "resume"
             st.download_button("Download PDF", data=pdf, file_name=f"{safe}_resume.pdf",
                                mime="application/pdf", use_container_width=True)
-        elif not REPORTLAB_OK:
+        elif not check_reportlab():
             st.button("PDF (install reportlab)", disabled=True, use_container_width=True)
         else:
             st.button("Download PDF", disabled=True, use_container_width=True)
